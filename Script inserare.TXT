@@ -1,0 +1,35 @@
+-- Inserting values into messages table
+INSERT INTO [dbo].[messages] ([firstname], [lastname], [email], [phone], [subject], [message])
+VALUES 
+('John', 'Doe', 'john@example.com', '1234567890', 'Query', 'This is a message.'),
+('Jane', 'Smith', 'jane@example.com', '0987654321', 'Feedback', 'Another message.'),
+('Alice', 'Johnson', 'alice@example.com', '111222333', 'Support', 'Need assistance.'),
+('Bob', 'Williams', 'bob@example.com', '444555666', 'Inquiry', 'Question here.'),
+('Eve', 'Brown', 'eve@example.com', '777888999', 'Report', 'Reporting an issue.');
+
+-- Inserting values into BOOKS table
+INSERT INTO [dbo].[BOOKS] ([title], [authors], [num_pages], [price], [category], [description], [image_filename])
+VALUES 
+('Book 1', 'Author A', 200, 19.99, 'Fiction', 'Description of Book 1.', 'book1.jpg'),
+('Book 2', 'Author B', 300, 29.99, 'Non-Fiction', 'Description of Book 2.', 'book2.jpg'),
+('Book 3', 'Author C', 250, 24.99, 'Science', 'Description of Book 3.', 'book3.jpg'),
+('Book 4', 'Author D', 150, 14.99, 'History', 'Description of Book 4.', 'book4.jpg'),
+('Book 5', 'Author E', 180, 17.99, 'Art', 'Description of Book 5.', 'book5.jpg');
+
+-- Inserting values into orders table
+INSERT INTO [dbo].[orders] ([order_date], [delivery_adress], [payment_method], [payment_status], [order_status])
+VALUES 
+('2023-01-01', '123 Main St', 'Credit Card', 'accepted', 'delivered'),
+('2023-02-05', '456 Oak Ave', 'PayPal', 'pending', 'created'),
+('2023-03-10', '789 Elm Rd', 'Debit Card', 'canceled', 'canceled'),
+('2023-04-15', '101 Pine Blvd', 'Cash on Delivery', 'pending', 'accepted'),
+('2023-05-20', '222 Cedar Ln', 'Credit Card', 'accepted', 'delivered');
+
+-- Inserting values into order_items table
+INSERT INTO [dbo].[order_items] ([order_id], [book_id], [quantity], [unit_price])
+VALUES 
+(1, 1, 2, 19.99),
+(2, 3, 1, 24.99),
+(3, 5, 3, 17.99),
+(4, 2, 1, 29.99),
+(5, 4, 2, 14.99);
