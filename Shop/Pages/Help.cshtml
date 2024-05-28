@@ -4,26 +4,101 @@
     ViewData["Title"] = "Help";
 }
 <h1>@ViewData["Title"]</h1>
+<!-- Maftei Gutui Robert Mihaita-->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+
+    .card {
+        border: 1px solid lightblue;
+    }
+
+    .card-title {
+        color: #007bff;
+    }
+</style>
 
 
 
 
-<div class="text-nowrap" style="width: 4rem;">
-    Shop - Pagina principala. Si de aici se pot cumpara carti sau vedea detalii
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Detallii Tehnice</h5>
+        <p class="card-text">
+            Aplicatie CRUD semi-functionala care imita un magazin online de carti.
+            Toate paginile front-end sunt facut cu bootstrap-css, iar back-endul este facut cu SQL server. Paginarea, filrarea, sunt facute si ele
+            utilizand Query-uri SQLServer. JavaScript este folosit foarte putin (doar pentru cartul de cumparare). In mare parte este folosit modelul razor pages .NET framework.
+        </p>
+    </div>
 </div>
 
-<div class="text-nowrap" style="width: 8rem;">
-    Books - Pagina de vizualizare detaliata a cartilor. Se pot aplica 3 filte in functie de pret, categorie
+
+
+
+<div class="container mt-5">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Shop</h5>
+            <p class="card-text">
+                Pagina principala. De aici  si in pagina filter se pot cumpara carti sau vedea detaliile cartilor.
+                Cumpararea cartilor umple cart-ul, iar vizionarea detaliilor ne duce intr-o pagina noua in care sunt descrise detaliie cu ajutorul unui tabel.
+            </p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Books</h5>
+            <p class="card-text">
+                Pagina de vizualizare detaliata a cartilor. Se pot aplica 3 filtre in functie de pret, categorie, dar se poate si cauta dupa un nume specific.
+                La apasarea Search se cauta in functie de toate 3 odata. Nu se cauta in mod individual
+            </p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Admin Menu</h5>
+            <p class="card-text"> Cu ajutorul meniului de admin putem vedea istoricul comenzilor date, precum si adaugarea cartilor noi in baza de date.</p>
+            <p class="card-text">
+                De aici putem vizionat ce s-a trimis in contact form prin Messages, putem viziona ce am comandat mai exact in Orders, si cel mai important, putem adauga carti noi in pagina Books a AdminMenu, precum si edita sau sterge ce avem deja, din frontend.
+                De asemeni, este implementata si paginarea la toate entitatile din baza de date pe care le afisam.
+            </p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Cart Button</h5>
+            <p class="card-text">Putem vedea cartul nostru curent (cate carti am comandat), si este butonul care ne trimite la pagina de finalizare a comenzii.</p>
+            <p class="card-text">Pagina cartului de cumparare. Apare un meniu din care putem plusa sau scadea ce am comandat. Putem selecta metoda de plata si adresa (chestii fictive fara functionalitate), si la apasarea butonului checkout si refresh-ul paginii totul se curata.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Register and Login Buttons</h5>
+            <p class="card-text">Butoanele de register si login. De la multe update-uri nu mai functioneaza logarea. Initial Admin-Menu era vizibil doar pentru utilizatorii logati.</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Contact Page</h5>
+            <p class="card-text">Completarea unui formular la care ii putem vedea detaliile in Admin Menu. Initial trebuia sa aiba si functionalitatea de a trimite e-mail dar din pacate nu s-a putut.</p>
+        </div>
+    </div>
 </div>
 
-<div class="text-nowrap" style="width: 8rem;">
-    Admin menu - Scroll bar. Cu ajutorul meniului de admin putem vedea istoricul comenzilor date, precum si adaugarea cartilor noi in baza de date 
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Detallii Tehnice</h5>
+        <p class="card-text">
+            Toate paginile front-end sunt facut cu bootstrap-css, iar back-endul este facut cu SQL server. Paginarea, filrarea, sunt facute si ele
+            utilizand Query-uri SQLServer. JavaScript este folosit foarte putin (doar pentru cartul de cumparare). In mare parte este folosit modelul razor pages .NET framework.
+        </p>
+    </div>
 </div>
-
-
-
-
-
-
-
-
+</div>

@@ -3,7 +3,9 @@
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-
+<!-- 
+Branici Radu
+Pagina care trebuia sa controleze ce apare in functie daca suntem logati ( not working anymore)-->
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {

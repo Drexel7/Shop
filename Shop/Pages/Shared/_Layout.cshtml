@@ -2,6 +2,14 @@
 @using Shop.Models
 @inject SignInManager<User> SignInManager
 <!DOCTYPE html>
+
+
+
+
+<!-- Branici Radu
+    Pagina care descrie layoutul principal (navbar-ul si pagina principala
+    Functia javascript se foloseste de cookie javascript pentru a actualiza in cart cate chestii avem cumparate in timp real
+-->
 <script>
     function addToCart(button, bookId) {
         let oldCartValue = getCookieValue("shopping_cart");
@@ -58,7 +66,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Books">Books</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Books">Filter</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Contact">Contact</a>

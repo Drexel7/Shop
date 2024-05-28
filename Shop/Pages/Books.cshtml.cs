@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Pages.Admin.Books;
 using System.Data.SqlClient;
+// <!-- Maftei Gutui Robert Mihaita-->
+//Pagina Filter. Se folosesc multe QUERY-uri SQL pentru a filtra cartile din baza de date si a le afisa in web
+
 
 namespace Shop.Pages
 {
     [BindProperties(SupportsGet = true)]
     public class BooksModel : PageModel
-    {
+    {   // any sunt declarate ca sa putem avea niste valori default la cele 2 filtre
         public string? Search { get; set; }
         public string PriceRange { get; set; } = "any";
         public string Category { get; set; } = "any";
@@ -77,6 +80,8 @@ namespace Shop.Pages
                 sql += " WHERE (title LIKE @search OR authors LIKE @search) ";
                 Console.WriteLine(PriceRange);
                 Console.WriteLine(Category);
+
+                // aici egalarea este facuta case sensitive
                 if (PriceRange.Equals("0_100"))
                 {
                     sql += " AND price <= 100 ";
@@ -100,12 +105,13 @@ namespace Shop.Pages
                     sql += " AND category=@category";
                     Console.WriteLine("Da");
                 }
-
+                // FETCH NExt este folosit pentru a implementa paginarea . @pagesize extrage numarul specific pe care il dorim de iteme 
                 sql += " ORDER BY id ASC ";
                 sql += "OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY ";
 
 
-
+                // Procentele astea 2 inainte de search sunt folosite pentru a cauta ce este pus in textbox-ul la form oriunde in string
+                // Ca exemplu, Daca cautam ih si noi avem Mihai. Ne apare Corect
                 SqlCommand cmd = new SqlCommand(sql, connection);
                 cmd.Parameters.AddWithValue("@search", "%" + Search + "%"); 
                 cmd.Parameters.AddWithValue("@category",Category ); 

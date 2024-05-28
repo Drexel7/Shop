@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Pages.Admin.Books;
 using System.Data.SqlClient;
-
-
+///Branici Radu
+/// Utilizeaza SQL server pentru a obtine detalii despre carti
 namespace Shop.Pages
 {
     public class BookDetailsModel : PageModel

@@ -1,6 +1,11 @@
 ﻿@page
 @model Shop.Pages.BookDetailsModel
 
+<!-- Branici Radu  
+    Pagina care ne arata detaliile unei carti specifice se foloseste un tabel pentru toate datele inafara de descriere. Descrierea deobicei este prea 
+    lunga ca sa incapa intr-un tabel
+-->
+
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +15,7 @@
 
     <div class="container">
         <h1 class="rounded text-center text-white p-3" style="background-color: lightblue;">Details</h1>
-
+        <!-- btn warning only represents the color-->
         <div class="row">
             <div class="col-md-5">
                 <img src="/imagesBooks/@Model.bookInfo.ImageFileName" class="img-fluid-rounded" width="400" height="600" alt="Book Image">

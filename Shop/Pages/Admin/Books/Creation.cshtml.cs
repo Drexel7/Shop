@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 
+
+// Branici Radu
+//Paginea creari din interfata front-end a unei carti. Insereaza in baza de date detaliile puse dintr-un formular front-end
+// Se foloseste system.io pentru a putea insera imagini oriunde din calculator.
 namespace Shop.Pages.Admin.Books
 {
     public class CreationModel : PageModel

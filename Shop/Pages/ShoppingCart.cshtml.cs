@@ -7,6 +7,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Transactions;
 
+//< !--Maftei Gutui Robert Mihaita & Branici Radu-->
+//Se mosteneste clasa PageModel pentru a crea un cos de cumparare. Cosul de cumparare tine toate detaliile necesare
+// unei carti ca items folosindu-se de un dictionar si le pune intr-o noua baza de date
+
+
 namespace Shop.Pages
 {
     [BindProperties]
@@ -18,7 +23,7 @@ namespace Shop.Pages
 
         [Required(ErrorMessage = "The payment method is required")]
         public string PaymentMethod { get; set; } = "";
-        public List <OrderItem> items= new List<OrderItem> ();
+        public List<OrderItem> items = new List<OrderItem>();
 
         private Dictionary<String, int> getBookDictionary()
         {
@@ -49,48 +54,48 @@ namespace Shop.Pages
 
         public void OnGet()
         {
-            var bookDictionary= getBookDictionary();
+            var bookDictionary = getBookDictionary();
             string? action = Request.Query["action"];
             string? id = Request.Query["id"];
-            if(action != null && id!=null && bookDictionary.ContainsKey(id))
+            if (action != null && id != null && bookDictionary.ContainsKey(id))
             {
 
 
 
-               if(action.Equals("add"))
+                if (action.Equals("add"))
                 {
                     bookDictionary[id] += 1;
                 }
-               else if (action.Equals("sub")) 
+                else if (action.Equals("sub"))
                 {
-                    if (bookDictionary[id]>1)
+                    if (bookDictionary[id] > 1)
                         bookDictionary[id] -= 1;
                 }
-               else if (action.Equals("delete"))
+                else if (action.Equals("delete"))
                 {
                     bookDictionary.Remove(id);
                 }
                 string newCookie = "";
-                foreach(var keyValuePair in bookDictionary)
+                foreach (var keyValuePair in bookDictionary)
                 {
-                    for(int i=0;i<keyValuePair.Value;i++)   
+                    for (int i = 0; i < keyValuePair.Value; i++)
                     {
                         newCookie += "-" + keyValuePair.Key;
                     }
                 }
 
-                if(newCookie.Length> 0) 
+                if (newCookie.Length > 0)
                 {
                     newCookie = newCookie.Substring(1);
-                
+
                 }
 
-                var cookieOptions=new CookieOptions();
-                cookieOptions.Expires=DateTime.Now.AddDays(365);
+                var cookieOptions = new CookieOptions();
+                cookieOptions.Expires = DateTime.Now.AddDays(365);
                 cookieOptions.Path = "/";
-                Response.Cookies.Append("shopping_cart",newCookie,cookieOptions);
+                Response.Cookies.Append("shopping_cart", newCookie, cookieOptions);
                 Response.Redirect(Request.Path.ToString());
-            
+
             }
             try
             {
@@ -98,30 +103,30 @@ namespace Shop.Pages
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 string sql = "SELECT * FROM BOOKS WHERE id=@id ";
-                foreach(var keyValuePair in getBookDictionary())
+                foreach (var keyValuePair in getBookDictionary())
                 {
-                    string bookId=keyValuePair.Key;
+                    string bookId = keyValuePair.Key;
                     SqlCommand cmd = new SqlCommand(sql, connection);
-                    cmd.Parameters.AddWithValue("@id",bookId);
-                    SqlDataReader reader=cmd.ExecuteReader();
-                       while(reader.Read()) 
-                        {
-                            OrderItem item = new();
-  
-                            item.bookInfo.Id = reader.GetInt32(0);
-                            item.bookInfo.Title = reader.GetString(1);
-                            item.bookInfo.Author = reader.GetString(2);
-                            item.bookInfo.NumPages = reader.GetInt32(3);
-                            item.bookInfo.Price = reader.GetDecimal(4);
-                            item.bookInfo.Category = reader.GetString(5);
-                            item.bookInfo.Description = reader.GetString(6);
-                            item.bookInfo.ImageFileName = reader.GetString(7);
-                            item.bookInfo.CreatedAt = reader.GetDateTime(8).ToString("MM/dd/yyyy");
-                            item.numCopies=keyValuePair.Value;
-                            item.totalPrice=item.numCopies *item.bookInfo.Price;
-                            items.Add(item);
+                    cmd.Parameters.AddWithValue("@id", bookId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        OrderItem item = new();
 
-                        }
+                        item.bookInfo.Id = reader.GetInt32(0);
+                        item.bookInfo.Title = reader.GetString(1);
+                        item.bookInfo.Author = reader.GetString(2);
+                        item.bookInfo.NumPages = reader.GetInt32(3);
+                        item.bookInfo.Price = reader.GetDecimal(4);
+                        item.bookInfo.Category = reader.GetString(5);
+                        item.bookInfo.Description = reader.GetString(6);
+                        item.bookInfo.ImageFileName = reader.GetString(7);
+                        item.bookInfo.CreatedAt = reader.GetDateTime(8).ToString("MM/dd/yyyy");
+                        item.numCopies = keyValuePair.Value;
+                        item.totalPrice = item.numCopies * item.bookInfo.Price;
+                        items.Add(item);
+
+                    }
                     reader.Close();
                 }
 
@@ -131,24 +136,28 @@ namespace Shop.Pages
             {
                 Console.WriteLine(ex.Message);
             }
-         
+
         }
-        public string ErrorMessage="";
-        public string SuccessMessage="";
+        public string ErrorMessage = "";
+        public string SuccessMessage = "";
         public void OnPost()
         {
             if (!ModelState.IsValid)
             {
 
             }
-            var bookDictionary=getBookDictionary();
-            if(bookDictionary.Count < 1) 
+            var bookDictionary = getBookDictionary();
+            if (bookDictionary.Count < 1)
             {
                 ErrorMessage = "Cart is empty";
                 return;
             }
             try
             {
+
+                //SCOPE_IDENTITY() returns the last identity value generated in the same scope.
+                //This means it does not look at identity values generated in other scopes or by other sessions. 
+
                 string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
@@ -165,16 +174,16 @@ namespace Shop.Pages
 
                 // Use ExecuteScalar to retrieve the generated order ID
                 int orderId = Convert.ToInt32(cmd.ExecuteScalar());
-            
+
 
                 string order_item_sql = "INSERT INTO order_items (order_id,book_id,quantity,unit_price) " +
                     "VALUES (@order_id,@book_id,@quantity,@unit_price)";
 
 
-              
 
 
-                foreach ( var item in bookDictionary)
+
+                foreach (var item in bookDictionary)
                 {
                     string bookID = item.Key;
                     int quantity = item.Value;
@@ -189,19 +198,19 @@ namespace Shop.Pages
                 }
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 ErrorMessage = ex.Message; return;
 
             }
             Response.Cookies.Delete("shopping_cart");
             SuccessMessage = "Order Created";
-            
+
         }
 
         private decimal getbookPrice(string bookID)
         {
-            decimal price=0;
+            decimal price = 0;
 
             try
             {
@@ -212,7 +221,7 @@ namespace Shop.Pages
                 SqlCommand cmd = new SqlCommand(sql, connection);
                 cmd.Parameters.AddWithValue("@id", bookID);
                 SqlDataReader reader = cmd.ExecuteReader();
-            
+
                 if (reader.Read())
                 {
                     price = reader.GetDecimal(0);
@@ -220,9 +229,9 @@ namespace Shop.Pages
 
                 reader.Dispose();
 
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

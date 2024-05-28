@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 
+//Branici Radu
+// Pagina cu cod asemanator al creearii. Doar ca aici se pot edita detaliie unei carti.
 namespace Shop.Pages.Admin.Books
 {
     public class EditModel : PageModel

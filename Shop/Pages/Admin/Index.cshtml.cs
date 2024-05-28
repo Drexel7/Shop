@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 
+
+//Pagina Orders. Folosindu-se de detaliile din baza de date a cartii. Se creaza 2 baze de date noi,
+// din care extragem detaliie necesare la ce s-a cumparat.
+
 namespace Shop.Pages.Admin
 {
     public class IndexModel : PageModel

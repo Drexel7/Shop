@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using static Shop.Pages.Admin.IndexModel;
-
+//Pagina unde putem vedea detaliie mesajului din contact.
 namespace Shop.Pages.Admin
 {
     public class DetailsModel : PageModel

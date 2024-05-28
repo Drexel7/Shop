@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-
+//Nu mai functioneaza
 namespace Shop.Models
 {
     public class User :IdentityUser

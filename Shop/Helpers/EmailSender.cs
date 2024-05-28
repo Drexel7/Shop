@@ -1,6 +1,8 @@
 ﻿using SendGrid;
 using SendGrid.Helpers.Mail;
 
+// functia care trebuia sa trimita email. Nu am reusit sa o fac sa functioneze
+// <!-- Maftei Gutui Robert Mihaita-->
 namespace Shop.Helpers
 {
     public class EmailSender
@@ -9,7 +11,7 @@ namespace Shop.Helpers
         {
             string apiKey = "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";
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("branicir@gmail.com", "Shopppal");
+            var from = new EmailAddress("numaimerge", "Shopppal");
             var to = new EmailAddress(toEmail, username);
             var plainTextContent = message;
             var htmlContent = "";

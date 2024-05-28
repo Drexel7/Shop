@@ -7,6 +7,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography.X509Certificates;
 
+
+// Pagina care se ocupa de Contact Form. Proprietatile specifice C# cum ar fi [BindProperty][Min lenght]
+// Pun diverse constrangeri asupra la ce se trimite din form, fara sa mai utilizam constarngeri specifice bazei de date 
+
 namespace Shop.Pages
 {
     public class ContactModel : PageModel
@@ -33,6 +37,7 @@ namespace Shop.Pages
         [Display(Name = "Subject*")]
 
         public string Subject { get; set; } = "";
+        // Ce se afiseaza in cazul in care nu respecti constrangerile
         [BindProperty]
         [Required(ErrorMessage = "The Message is required")]
         [MinLength(10,ErrorMessage="N-ai bagat destula  vrajeala")]
