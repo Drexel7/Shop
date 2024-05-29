@@ -7,9 +7,39 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Transactions;
 
-//< !--Maftei Gutui Robert Mihaita & Branici Radu-->
-//Se mosteneste clasa PageModel pentru a crea un cos de cumparare. Cosul de cumparare tine toate detaliile necesare
-// unei carti ca items folosindu-se de un dictionar si le pune intr-o noua baza de date
+
+
+public interface ICartObserver
+{
+    void AddressChanged(string newAddress);
+    void PaymentMethodChanged(string newPaymentMethod);
+}
+public static class Globals
+{
+    public static int addressChangeCount = 0; // Unmodifiable
+    public static int paymentMethodChangeCount = 0;
+}
+
+
+
+
+public class CartLogger : ICartObserver
+{
+
+
+    public void AddressChanged(string newAddress)
+    {
+        Globals.addressChangeCount++;
+        Console.WriteLine($"Address changed to: {newAddress}. Total address changes: {Globals.addressChangeCount}");
+    }
+
+    public void PaymentMethodChanged(string newPaymentMethod)
+    {
+        Globals.paymentMethodChangeCount++;
+        Console.WriteLine($"Payment method changed to: {newPaymentMethod}. Total payment method changes: {Globals.paymentMethodChangeCount}");
+    }
+}
+
 
 
 namespace Shop.Pages
@@ -18,11 +48,66 @@ namespace Shop.Pages
     public class ShoppingCartModel : PageModel
     {
         [Required(ErrorMessage = "The address is required")]
-        public string Address { get; set; } = "";
-
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set
+            {
+                if (address != value)
+                {
+                    address = value;
+                    NotifyAddressChanged();
+                }
+            }
+        }
 
         [Required(ErrorMessage = "The payment method is required")]
-        public string PaymentMethod { get; set; } = "";
+        private string paymentMethod;
+        public string PaymentMethod
+        {
+            get { return paymentMethod; }
+            set
+            {
+                if (paymentMethod != value)
+                {
+                    paymentMethod = value;
+                    NotifyPaymentMethodChanged();
+                }
+            }
+        }
+
+        private List<ICartObserver> observers = new List<ICartObserver>();
+        private CartLogger cartLogger = new CartLogger();
+        public ShoppingCartModel()
+        {
+            Attach(cartLogger);
+        }
+
+        public void Attach(ICartObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void NotifyAddressChanged()
+        {
+            foreach (var observer in observers)
+            {
+                observer.AddressChanged(Address);
+            }
+        }
+
+        public void NotifyPaymentMethodChanged()
+        {
+            foreach (var observer in observers)
+            {
+                observer.PaymentMethodChanged(PaymentMethod);
+            }
+        }
+
+
+
+
         public List<OrderItem> items = new List<OrderItem>();
 
         private Dictionary<String, int> getBookDictionary()
@@ -154,10 +239,6 @@ namespace Shop.Pages
             }
             try
             {
-
-                //SCOPE_IDENTITY() returns the last identity value generated in the same scope.
-                //This means it does not look at identity values generated in other scopes or by other sessions. 
-
                 string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
