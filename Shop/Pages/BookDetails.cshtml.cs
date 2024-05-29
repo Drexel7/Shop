@@ -1,15 +1,30 @@
+/**************************************************************************
+ *                                                                        *
+ *  File:        BookDetails.cshtml.cs                                    *
+ *  Copyright:   (c) 2024, Maftei Gutui Robert, Branici Radu              *
+ *                                                                        *
+ *  E-mail:      robert-mihaita.maftei-gutui@student.tuiasi.ro,           *
+ *               radu.branici@student.tuiasi.ro                           *
+ *  Description:  Book Store Online Web Application                       *
+ *                Main function for application.                          *
+ *                                                                        *
+ *  This code and information is provided "as is" without warranty of     *
+ *  any kind, either expressed or implied, including but not limited      *
+ *  to the implied warranties of merchantability or fitness for a         *
+ *  particular purpose. You are free to use this source code in your      *
+ *  applications as long as the original copyright notice is included.    *
+ *                                                                        *
+ **************************************************************************/
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Pages.Admin.Books;
 using System.Data.SqlClient;
-///Branici Radu
-/// Utilizeaza SQL server pentru a obtine detalii despre carti
 
 public interface IBookRepository
 {
     BookInfo GetBookById(int id);
 }
-
 
 public class BookRepository : IBookRepository
 {
@@ -68,7 +83,7 @@ namespace Shop.Pages
     public class BookDetailsModel : PageModel
     {
         private readonly IBookRepository _bookRepository;
-        public BookInfo bookInfo { get; private set; }
+        public BookInfo BookInfo { get; private set; }
 
         public BookDetailsModel(IBookRepository bookRepository)
         {
@@ -77,20 +92,41 @@ namespace Shop.Pages
 
         public IActionResult OnGet(int? id)
         {
-            if (id == null)
+            if (id == null || id <= 0 || id == int.MaxValue)
             {
                 return RedirectToPage("Error");
             }
 
-            bookInfo = _bookRepository.GetBookById(id.Value);
-
-            if (bookInfo == null)
+            try
             {
-                return RedirectToPage("/");
+                BookInfo = _bookRepository.GetBookById(id.Value);
+
+                if (BookInfo == null)
+                {
+                    return RedirectToPage("/");
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return RedirectToPage("Error");
             }
 
             return Page();
         }
-    }
 
+        public IActionResult AddToCart(int? bookId)
+        {
+            if (bookId == null || bookId <= 0 || bookId == int.MaxValue)
+            {
+                return Content("Invalid book ID.");
+            }
+
+            // Logic for adding the book to the cart goes here
+            // For now, let's just return a message indicating success
+            return Content($"Book with ID {bookId} added to cart successfully.");
+        }
+
+
+    }
 }

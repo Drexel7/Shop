@@ -7,59 +7,63 @@
 -->
 
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Book Details</title>
 </head>
 <body>
 
-    <div class="container">
-        <h1 class="rounded text-center text-white p-3" style="background-color: lightblue;">Details</h1>
-        <!-- btn warning only represents the color-->
-        <div class="row">
-            <div class="col-md-5">
-                <img src="/imagesBooks/@Model.bookInfo.ImageFileName" class="img-fluid-rounded" width="400" height="600" alt="Book Image">
-                <button class="btn btn-primary btn-sm my-2 btn-warning" onclick="addToCart(this, @Model.bookInfo.Id)">
-                    Add to Cart <i class="bi bi-cart"></i>
-                </button>
-            </div>
-
-            <div class="col-md-7">
-                <table class="table table-bordered table-info">
-                    <tbody>
-                        <tr>
-                            <td><strong>Title</strong></td>
-                            <td>@Model.bookInfo.Title</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Author</strong></td>
-                            <td>@Model.bookInfo.Author</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Price</strong></td>
-                            <td>@Model.bookInfo.Price</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Number of Pages</strong></td>
-                            <td>@Model.bookInfo.NumPages</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Category</strong></td>
-                            <td>@Model.bookInfo.Category</td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-                <p><strong>Description:</strong></p>
-                <br />
-                <p style="white-space:pre-wrap; word-wrap:break-word">@Model.bookInfo.Description</p>
-            </div>
+<div class="container">
+    <h1 class="rounded text-center text-white p-3" style="background-color: lightblue;">Details</h1>
+    <!-- btn warning only represents the color-->
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/imagesBooks/@Model.BookInfo.ImageFileName" class="img-fluid-rounded" width="400" height="600" alt="Book Image">
+            <button class="btn btn-primary btn-sm my-2 btn-warning" onclick="addToCart(this, @Model.BookInfo.Id)">
+                Add to Cart <i class="bi bi-cart"></i>
+            </button>
         </div>
 
-
-
-    
+        <div class="col-md-7">
+            <table class="table table-bordered table-info">
+                <tbody>
+                    <tr>
+                        <td><strong>Title</strong></td>
+                        <td>@Model.BookInfo.Title</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author</strong></td>
+                        <td>@Model.BookInfo.Author</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Price</strong></td>
+                        <td>@Model.BookInfo.Price</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of Pages</strong></td>
+                        <td>@Model.BookInfo.NumPages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Category</strong></td>
+                        <td>@Model.BookInfo.Category</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Description:</strong></p>
+            <p style="white-space:pre-wrap; word-wrap:break-word">@Model.BookInfo.Description</p>
+        </div>
     </div>
+</div>
+
+<script>
+    function addToCart(button, bookId) {
+        // Add book to cart logic here
+        alert("Book added to cart with ID: " + bookId);
+    }
+</script>
 
 </body>
+</html>

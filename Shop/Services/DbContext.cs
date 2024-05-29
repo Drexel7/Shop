@@ -32,8 +32,6 @@ namespace Shop.Services
         {   
             
         
-        
-        
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
