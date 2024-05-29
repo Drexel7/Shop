@@ -29,12 +29,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
     options.UseSqlServer(connectionString);
-        
+
 });
+
+builder.Services.AddTransient<IBookRepository, BookRepository>(provider =>
+    new BookRepository("Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True"));
+
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 
 var app = builder.Build();
 
@@ -45,8 +51,10 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseStaticFiles();
 
+
+
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 
